@@ -22,7 +22,7 @@ const customerSchema = new mongoose.Schema({
   },
 });
 
-const Customer = mongoose.model('Customer', customerSchema);
+const CustomerModel = mongoose.model('Customer', customerSchema);
 
 function validateCustomer(customer) {
   const schema = Joi.object({
@@ -34,5 +34,5 @@ function validateCustomer(customer) {
   return schema.validate(customer);
 }
 
-module.exports.Customer = Customer;
+module.exports.Customer = CustomerModel;
 module.exports.validateCustomer = validateCustomer;

@@ -16,7 +16,7 @@ app.use('/api/customers', customersRouter);
 mongoose
   .connect(
     `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.daqap.mongodb.net/${process.env.DB_NAME}`,
-    { useNewUrlParser: true, useUnifiedTopology: true }
+    { useNewUrlParser: true, useUnifiedTopology: true },
   )
   .then(dbDebugger('Successfully connected to MongoDB.'))
   .catch((err) => dbDebugger('Connection to MongoDB failed:', err.message));
