@@ -9,6 +9,9 @@
     "ecmaVersion": 12
   },
   "rules": {
-    "linebreak-style": "off"
+    "linebreak-style": "off",
+    "newline-per-chained-call": "warn",
+    "no-underscore-dangle": "warn",
+    "comma-dangle": "warn"
   }
 }

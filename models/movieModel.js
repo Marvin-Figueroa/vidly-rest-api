@@ -35,8 +35,11 @@ function validateMovie(movie) {
     title: Joi.string().max(100).min(2).trim().required(),
     dailyRentalRate: Joi.number().min(0).max(100).default(0),
     numberInStock: Joi.number().min(0).max(255).required(),
-    // No verifico si genreId es un ObjectId valido
-    genreId: Joi.string().required().trim(),
+    // Verifico si genreId es un ObjectId valido con la RegEx en pattern
+    genreId: Joi.string()
+      .required()
+      .trim()
+      .pattern(/^[0-9a-fA-F]{24}$/),
   });
 
   return schema.validate(movie);

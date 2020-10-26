@@ -63,10 +63,12 @@ const rentalSchema = new mongoose.Schema({
 const Rental = mongoose.model('Rental', rentalSchema);
 
 function validateRental(rental) {
+  const validationPattern = /^[0-9a-fA-F]{24}$/;
+
   const schema = Joi.object({
-    // No verifico si ambos ID son ObjectIds validos...posible error al parsearlos
-    customerId: Joi.string().required(),
-    movieId: Joi.string().required(),
+    // Verifico si ambos ID son ObjectIds validos con la RegExp en validationPattern
+    customerId: Joi.string().required().pattern(validationPattern),
+    movieId: Joi.string().required().pattern(validationPattern),
     // El cliente enviara unicamente los 2 ID anteriores como parte de la post request.
   });
 

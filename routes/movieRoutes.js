@@ -1,20 +1,23 @@
 const express = require('express');
 const moviesController = require('../controllers/moviesController');
-const validator = require('../middleware/validateMongoObjectId');
+const validateId = require('../middleware/validateObjectId');
+const auth = require('../middleware/auth');
+const admin = require('../middleware/admin');
 
 const router = express.Router();
 
-router.param('id', validator.validateId);
+// Asegura que el parametro id de la request sea un ObjectId valido
+router.param('id', validateId);
 
 router
   .route('/')
   .get(moviesController.getAllMovies)
-  .post(moviesController.createMovie);
+  .post(auth, moviesController.createMovie);
 
 router
   .route('/:id')
   .get(moviesController.getMovie)
-  .put(moviesController.updateMovie)
-  .delete(moviesController.deleteMovie);
+  .put(auth, moviesController.updateMovie)
+  .delete(auth, admin, moviesController.deleteMovie);
 
 module.exports = router;

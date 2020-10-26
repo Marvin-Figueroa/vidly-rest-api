@@ -1,18 +1,23 @@
 const express = require('express');
 const genresController = require('../controllers/genresController');
-const validator = require('../middleware/validateMongoObjectId');
+const validateId = require('../middleware/validateObjectId');
+const auth = require('../middleware/auth');
+const admin = require('../middleware/admin');
 
 const router = express.Router();
 
-router.param('id', validator.validateId);
+// Asegura que el parametro id de la request sea un ObjectId valido
+router.param('id', validateId);
 
-router.route('/')
+router
+  .route('/')
   .get(genresController.getAllGenres)
-  .post(genresController.createGenre);
+  .post(auth, genresController.createGenre);
 
-router.route('/:id')
+router
+  .route('/:id')
   .get(genresController.getGenre)
-  .delete(genresController.deleteGenre)
-  .put(genresController.updateGenre);
+  .delete(auth, admin, genresController.deleteGenre)
+  .put(auth, genresController.updateGenre);
 
 module.exports = router;

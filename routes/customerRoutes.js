@@ -1,20 +1,23 @@
 const express = require('express');
 const customersController = require('../controllers/customersController');
-const validator = require('../middleware/validateMongoObjectId');
+const validateId = require('../middleware/validateObjectId');
+const auth = require('../middleware/auth');
+const admin = require('../middleware/admin');
 
 const router = express.Router();
 
-router.param('id', validator.validateId);
+// Asegura que el parametro id de la request sea un ObjectId valido
+router.param('id', validateId);
 
 router
   .route('/')
   .get(customersController.getAllCustomers)
-  .post(customersController.createCustomer);
+  .post(auth, customersController.createCustomer);
 
 router
   .route('/:id')
   .get(customersController.getCustomer)
-  .put(customersController.updateCustomer)
-  .delete(customersController.deleteCustomer);
+  .put(auth, customersController.updateCustomer)
+  .delete(auth, admin, customersController.deleteCustomer);
 
 module.exports = router;

@@ -40,7 +40,7 @@ exports.deleteCustomer = async (req, res) => {
       .send('The customer with the given ID was not found.');
   }
 
-  return res.send(customer);
+  return res.status(204).send({ state: 'success', data: null });
 };
 
 exports.updateCustomer = async (req, res) => {

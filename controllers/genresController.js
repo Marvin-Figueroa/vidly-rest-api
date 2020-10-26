@@ -29,7 +29,7 @@ exports.deleteGenre = async (req, res) => {
     return res.status(404).send('The genre with the given ID was not found.');
   }
 
-  return res.send(genre);
+  return res.status(204).send({ state: 'success', data: null });
 };
 
 exports.updateGenre = async (req, res) => {
