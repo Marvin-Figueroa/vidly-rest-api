@@ -11,7 +11,7 @@ function validateAuth(userAuth) {
   return schema.validate(userAuth);
 }
 
-exports.authUser = async (req, res) => {
+exports.authenticateUser = async (req, res) => {
   const { error } = validateAuth(req.body);
   if (error) {
     return res.status(400).send(error.details[0].message);
@@ -28,6 +28,7 @@ exports.authUser = async (req, res) => {
   }
 
   const token = user.generateAuthToken();
-
-  return res.send(token);
+  res.header('x-auth-token', token).send('User authenticated successfully.');
+  // Envio el token en la response (Hay que modificar esto)
+  // return res.send(token);
 };

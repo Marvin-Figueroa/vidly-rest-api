@@ -3,7 +3,6 @@ const { User, validateUser } = require('../models/userModel');
 
 exports.getUser = async (req, res) => {
   const user = await User.findById(req.user._id).select('-password -__v');
-  console.log('From the userController.getUser: ', user);
   return res.send(user);
 };
 
@@ -30,12 +29,10 @@ exports.createUser = async (req, res) => {
   });
 
   const token = user.generateAuthToken();
-  return res
-    .header('x-auth-token', token)
-    .send({
-      _id: user._id,
-      name: user.name,
-      email: user.email,
-      isAdmin: user.isAdmin,
-    });
+  return res.header('x-auth-token', token).send({
+    _id: user._id,
+    name: user.name,
+    email: user.email,
+    isAdmin: user.isAdmin,
+  });
 };

@@ -1,6 +1,8 @@
 const { Genre, validateGenre } = require('../models/genreModel');
+// const asyncErrorMiddleware = require('../middleware/asyncErrorMiddleware');
 
 exports.getAllGenres = async (req, res) => {
+  throw new Error('A self made error has ocurred.');
   const genres = await Genre.find().sort({ name: 1 });
   res.send(genres);
 };
